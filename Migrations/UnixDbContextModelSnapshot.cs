@@ -25,8 +25,11 @@ namespace Unix.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ManufacturerID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CarDetailID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ManufacturerID")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -40,13 +43,10 @@ namespace Unix.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CarID")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ManufacturerID")
+                    b.Property<string>("Fuel")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Model")

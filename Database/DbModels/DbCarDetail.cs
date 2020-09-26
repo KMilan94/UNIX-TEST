@@ -10,6 +10,12 @@
 
         }
 
+        public DbCarDetail(string Model, string Color, string Fuel) {
+            this.Model = Model;
+            this.Color = Color;
+            this.Fuel = Fuel;
+        }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
@@ -17,11 +23,6 @@
 
         public string Color { get; set; }
 
-        [ForeignKey("Manufacturer")]
-        public string ManufacturerID { get; set; }
-
-        [ForeignKey("Car")]
-        public string CarID { get; set; }
-
+        public string Fuel { get; set; }
     }
 }

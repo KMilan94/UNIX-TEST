@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Unix.Database;
 using System.IO;
-using System;
+using Unix.Mock;
 
 namespace Unix
 {
@@ -30,6 +30,9 @@ namespace Unix
 
             services.AddSwaggerGen();
 
+            // Seed database with samples
+            services.AddTransient<ISeeder, Seeder>();
+
             services.AddDbContext<UnixDbContext>(options => options.UseSqlServer(@$"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={this.DB_PATH};Integrated Security=True"));
 
             // In production, the Angular files will be served from this directory
@@ -38,6 +41,7 @@ namespace Unix
                 configuration.RootPath = "ClientApp/dist";
             });
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -53,6 +57,19 @@ namespace Unix
                 app.UseHsts();
             }
 
+            var serviceCollection = new ServiceCollection();
+            ConfigureServices(serviceCollection);
+
+            // Migrate
+            DbContextOptionsBuilder<UnixDbContext> optionsBuilder = new DbContextOptionsBuilder<UnixDbContext>();
+            optionsBuilder.UseSqlServer(@$"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={this.DB_PATH};Integrated Security=True");
+            UnixDbContext unixDbContext = new UnixDbContext(optionsBuilder.Options);
+            unixDbContext.Database.Migrate();
+
+            // Seed database
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            serviceProvider.GetService<ISeeder>().Seed();
+
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -62,12 +79,6 @@ namespace Unix
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-
-            // Migrate
-            DbContextOptionsBuilder<UnixDbContext> optionsBuilder = new DbContextOptionsBuilder<UnixDbContext>();
-            optionsBuilder.UseSqlServer(@$"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={this.DB_PATH};Integrated Security=True");
-            UnixDbContext unixDbContext = new UnixDbContext(optionsBuilder.Options);
-            unixDbContext.Database.Migrate();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

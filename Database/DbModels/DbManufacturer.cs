@@ -10,6 +10,10 @@
 
         }
 
+        public DbManufacturer(string Name) {
+            this.Name = Name;
+        }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 

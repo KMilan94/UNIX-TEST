@@ -12,7 +12,8 @@ namespace Unix.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ManufacturerID = table.Column<string>(nullable: true)
+                    ManufacturerID = table.Column<int>(nullable: false),
+                    CarDetailID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,8 +28,7 @@ namespace Unix.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Model = table.Column<string>(nullable: true),
                     Color = table.Column<string>(nullable: true),
-                    ManufacturerID = table.Column<string>(nullable: true),
-                    CarID = table.Column<string>(nullable: true)
+                    Fuel = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
