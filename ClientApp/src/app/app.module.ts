@@ -7,13 +7,14 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { CarDetailListComponent } from './car-detail-list/car-detail-list.component';
+import { ManufacturerListComponent } from './manufacturer-list/manufacturer-list.component';
 import { Apiservice } from 'src/services/api.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSortModule, MatTableModule } from '@angular/material';
+import { MatInputModule, MatSortModule, MatTableModule } from '@angular/material';
 import { SearchComponent } from './search/search.component';
 
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -21,8 +22,8 @@ import { SearchComponent } from './search/search.component';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
+    CarDetailListComponent,
+    ManufacturerListComponent,
     SearchComponent
   ],
   imports: [
@@ -31,10 +32,13 @@ import { SearchComponent } from './search/search.component';
     FormsModule,
     MatTableModule,
     MatSortModule,
+    MatInputModule,
+    MatButtonModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'car-detail-list', component: CarDetailListComponent },
+      { path: 'manufacturer-list', component: ManufacturerListComponent },
+      { path: '**', component: HomeComponent },
     ]),
     BrowserAnimationsModule
   ],

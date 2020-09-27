@@ -1,0 +1,10 @@
+@import "../../theme/variables.scss";
+
+table{
+    width: 100%;
+}
+
+th {
+    background-color: $text;
+    color: white;
+}
