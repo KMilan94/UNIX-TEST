@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-search',
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent {
+
+  @Output() add = new EventEmitter();
+
+  addRecord() {
+    this.add.emit();
+  }
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Car } from 'src/domain/car';
 import { CarDTO } from 'src/domain/carDTO';
 
 @Injectable({
@@ -24,4 +23,11 @@ export class Apiservice {
     return this.http.get<any>("/api/cardetail");
   }
 
+  addCar(car: CarDTO): Observable<CarDTO> {
+    return this.http.post<CarDTO>("/api/car", car);
+  }
+
+  deleteCar(car: CarDTO): Observable<any> {
+    return this.http.delete(`/api/car/${car.id}`);
+  }
 }

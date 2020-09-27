@@ -9,13 +9,15 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CarDetailListComponent } from './car-detail-list/car-detail-list.component';
 import { ManufacturerListComponent } from './manufacturer-list/manufacturer-list.component';
-import { Apiservice } from 'src/services/api.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatSortModule, MatTableModule } from '@angular/material';
+import { AddDialogComponent } from './home/add-dialog/add-dialog.component';
 import { SearchComponent } from './search/search.component';
+import { Apiservice } from 'src/services/api.service';
 
+import { MatIconModule, MatInputModule, MatSortModule, MatTableModule } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
-
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import {MatButtonModule} from '@angular/material/button';
     HomeComponent,
     CarDetailListComponent,
     ManufacturerListComponent,
-    SearchComponent
+    SearchComponent,
+    AddDialogComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,6 +37,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatSortModule,
     MatInputModule,
     MatButtonModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatIconModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'car-detail-list', component: CarDetailListComponent },
@@ -43,6 +49,7 @@ import {MatButtonModule} from '@angular/material/button';
     BrowserAnimationsModule
   ],
   providers: [ Apiservice ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ AddDialogComponent]
 })
 export class AppModule { }
