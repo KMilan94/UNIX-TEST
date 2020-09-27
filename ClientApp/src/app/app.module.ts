@@ -10,6 +10,11 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { Apiservice } from 'src/services/api.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSortModule, MatTableModule } from '@angular/material';
+import { SearchComponent } from './search/search.component';
+
+
 
 @NgModule({
   declarations: [
@@ -17,17 +22,21 @@ import { Apiservice } from 'src/services/api.service';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    MatTableModule,
+    MatSortModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-    ])
+    ]),
+    BrowserAnimationsModule
   ],
   providers: [ Apiservice ],
   bootstrap: [AppComponent]

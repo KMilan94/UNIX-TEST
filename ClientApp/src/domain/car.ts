@@ -1,4 +1,8 @@
+import { Manufacturer } from "./manufacturer";
+import { CarDetail } from "./car-detail";
+
 export class Car {
-    ID: string;
-    ManuFacturerID: string;
+    id: number;
+    carDetail?: CarDetail;
+    manufacturer?: Manufacturer;
 }
