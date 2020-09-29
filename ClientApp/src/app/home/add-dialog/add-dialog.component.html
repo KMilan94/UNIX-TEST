@@ -1,6 +1,9 @@
 <form>
 
-  <h4>Add new</h4>
+  <h4 *ngIf="mode == 'add' else edit">Add new</h4>
+  <ng-template #edit>
+    <h4>Modify</h4>
+  </ng-template>
 
   <mat-form-field appearance="fill">
     <mat-label>Manufacturer</mat-label>

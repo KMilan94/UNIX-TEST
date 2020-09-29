@@ -11,6 +11,7 @@ import { AddDialogComponent } from './add-dialog/add-dialog.component';
 
 import * as _ from 'lodash';
 import { CarDTO } from 'src/domain/carDTO';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   manufacturers: Manufacturer[] = [];
   carDetails: CarDetail[] = [];
 
-  constructor(private api: Apiservice, private dialog: MatDialog) { }
+  constructor(private api: Apiservice, private dialog: MatDialog, private router: Router) { }
 
   displayedColumns: string[] = ['id', 'manufacturer.name', 'carDetail.model', 'actions'];
   dataSource;
@@ -34,7 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    // ToDo: refactor with map
+    // ToDo: refactor with map / zip
 
     this.subscriptions = [
       combineLatest([this.api.getManufacturers(), this.api.getCarDetails()]).pipe(
@@ -98,15 +99,56 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   modifyRecord(car: CarDTO) {
-    
+
+    console.log("Result: " + JSON.stringify(car))
+
+    this.subscriptions.push(
+      this.api.modifyCar(car).subscribe((res) => {
+
+        console.log("Res: " + JSON.stringify(res))
+        var index = this.cars.findIndex(x => x.id == car.id);
+
+        let tmp = new Car();
+        tmp.id = car.id;
+        tmp.carDetail = this.carDetails.find(c => c.id == car.carDetailID) || {} as CarDetail;
+        tmp.manufacturer = this.manufacturers.find(m => m.id == car.manufacturerID) || {} as Manufacturer;
+
+        this.cars[index] = tmp;
+        this.dataSource.data = this.cars;
+
+      }, (error) => {
+        console.log("Error: " + JSON.stringify(error))
+      })
+    )
   }
 
   // Helper methods
+
+  detail(element) {
+    console.log("Element: " + JSON.stringify(element))
+
+    this.router.navigate(["/car-detail/" + element.id])
+  }
+
+  applyFilter($event) {
+
+    if(!$event) {
+      this.dataSource.filter = '';
+    } else {
+      console.log("searching: " + $event + " in models");
+      this.dataSource.filter = $event;
+    }
+  }
   
   initSorting() {
     this.dataSource = new MatTableDataSource(this.cars);
     this.dataSource.sortingDataAccessor = _.get; 
     this.dataSource.sort = this.sort;
+    this.dataSource.filterPredicate = (data: Car, filter: string) => {
+
+
+      return data.carDetail.model.startsWith(filter);
+     };
   }
 
   addRecord() {
@@ -116,12 +158,25 @@ export class HomeComponent implements OnInit, OnDestroy {
   openDialog(): void {
     const dialogRef = this.dialog.open(AddDialogComponent, {
       width: '250px',
-      data: {manufacturers: this.manufacturers, carDetails: this.carDetails}
+      data: {manufacturers: this.manufacturers, carDetails: this.carDetails, mode: "add" }
     });
 
     this.subscriptions.push(
       dialogRef.afterClosed().subscribe(result => {
-        if(result.manufacturerID && result.carDetailID) this.saveRecord(result);
+        if(result && !!result.manufacturerID && !!result.carDetailID) this.saveRecord(result);
+      })
+    );
+  }
+
+  openEditDialog(element: Car): void {
+    const dialogRef = this.dialog.open(AddDialogComponent, {
+      width: '250px',
+      data: {manufacturers: this.manufacturers, carDetails: this.carDetails, mode: "edit", element: element }
+    });
+
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe(result => {
+        if(result && !!result.manufacturerID && !!result.carDetailID) this.modifyRecord(result);
       })
     );
   }

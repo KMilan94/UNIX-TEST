@@ -10,6 +10,10 @@ export class SearchComponent {
 
   @Output() add = new EventEmitter();
 
+  @Output() searchFilter = new EventEmitter<string>();
+
+  filterText: string = "";
+  
   addRecord() {
     this.add.emit();
   }

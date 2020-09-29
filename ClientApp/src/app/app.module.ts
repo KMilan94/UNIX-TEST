@@ -16,8 +16,10 @@ import { Apiservice } from 'src/services/api.service';
 import { MatIconModule, MatInputModule, MatSortModule, MatTableModule } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarDetailComponent } from './car-detail/car-detail.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CarDetailListComponent,
     ManufacturerListComponent,
     SearchComponent,
-    AddDialogComponent
+    AddDialogComponent,
+    CarDetailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -40,10 +43,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatDialogModule,
     MatSelectModule,
     MatIconModule,
+    MatCardModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'car-detail-list', component: CarDetailListComponent },
       { path: 'manufacturer-list', component: ManufacturerListComponent },
+      { path: 'car-detail/:id', component: CarDetailComponent },
       { path: '**', component: HomeComponent },
     ]),
     BrowserAnimationsModule

@@ -1,6 +1,6 @@
 <form>
     <mat-form-field>
-        <input matInput placeholder="Search" #search>
+        <input matInput placeholder="Search" [(ngModel)]="filterText" name="filter" #search (keyup)="searchFilter.emit(filterText)">
     </mat-form-field>
 
     <button mat-raised-button color="primary" (click)="addRecord()">Add new</button>
