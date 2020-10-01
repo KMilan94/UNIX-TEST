@@ -18,6 +18,7 @@ export class CarDetailComponent implements OnInit, OnDestroy {
   private routeSub: Subscription = {} as Subscription;
   private car: Car = {} as Car;
 
+  loading: boolean = true
   id: number;
 
   constructor(private route: ActivatedRoute, private api: Apiservice) { 
@@ -42,5 +43,9 @@ export class CarDetailComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
       this.routeSub.unsubscribe();
+    }
+
+    onLoad() {
+        this.loading = false;
     }
 }

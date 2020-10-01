@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { CarDetail } from 'src/domain/car-detail';
 import { Apiservice } from 'src/services/api.service';
+import { CarDetailDialogComponent } from './car-detail-dialog/car-detail-dialog.component';
 
 @Component({
   selector: 'app-car-detail-list',
@@ -11,7 +12,7 @@ import { Apiservice } from 'src/services/api.service';
 })
 export class CarDetailListComponent implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['id', 'model', 'color', 'fuel'];
+  displayedColumns: string[] = ['id', 'model', 'color', 'fuel', 'actions' ];
   dataSource;
 
   subscriptions: Subscription[] = [];
@@ -19,7 +20,7 @@ export class CarDetailListComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private api: Apiservice) { }
+  constructor(private api: Apiservice, private dialog: MatDialog) { }
 
 
   ngOnDestroy() {
@@ -38,5 +39,48 @@ export class CarDetailListComponent implements OnInit, OnDestroy {
   initSorting() {
     this.dataSource = new MatTableDataSource(this.carDetails);
     this.dataSource.sort = this.sort;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CarDetailDialogComponent, {
+      width: '250px',
+      data: { mode: "add" }
+    });
+
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe(result => {
+        if(result) this.saveRecord(result);
+      })
+    );
+  }
+
+  saveRecord(carDetail: CarDetail) {
+
+
+    this.subscriptions.push(
+
+      this.api.addCarDetail(carDetail).subscribe((res) => {
+
+        carDetail.id = res.id;
+        this.carDetails.push(carDetail);
+        this.dataSource.data = this.carDetails;
+
+      }, (error) => {
+        console.log("Error: " + JSON.stringify(error))
+      })
+    )
+  }
+
+  deleteRecord(element: CarDetail) {
+    this.subscriptions.push(
+      this.api.deleteCarDetail(element).subscribe((res) => {
+
+        this.carDetails = this.carDetails.filter(obj => obj.id !== res.id);
+        this.dataSource.data = this.carDetails;
+
+      }, (error) => {
+        console.warn("Error: " + JSON.stringify(error));
+      })
+    )
   }
 }

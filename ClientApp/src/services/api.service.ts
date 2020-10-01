@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CarDTO } from 'src/domain/carDTO';
 import { Car } from 'src/domain/car';
+import { Manufacturer } from 'src/domain/manufacturer';
+import { CarDetail } from 'src/domain/car-detail';
 
 @Injectable({
   providedIn: 'root',
@@ -41,5 +43,21 @@ export class Apiservice {
 
   deleteCar(car: CarDTO): Observable<any> {
     return this.http.delete(`/api/car/${car.id}`);
+  }
+
+  addManufacturer(manufacturer: Manufacturer): Observable<Manufacturer> {
+    return this.http.post<Manufacturer>("/api/manufacturer", manufacturer);
+  }
+
+  deleteManufacturer(manufacturer: Manufacturer): Observable<Manufacturer> {
+    return this.http.delete<Manufacturer>(`/api/manufacturer/${manufacturer.id}`);
+  }
+
+  deleteCarDetail(carDetail: CarDetail): Observable<CarDetail> {
+    return this.http.delete<CarDetail>(`/api/cardetail/${carDetail.id}`);
+  }
+
+  addCarDetail(carDetail: CarDetail): Observable<CarDetail> {
+    return this.http.post<CarDetail>("/api/cardetail", carDetail);
   }
 }

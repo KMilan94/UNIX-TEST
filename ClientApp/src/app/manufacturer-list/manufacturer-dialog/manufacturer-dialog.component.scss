@@ -1,0 +1,11 @@
+@import "../../../theme/variables.scss";
+
+.button-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+form {
+    padding: 2rem;
+}

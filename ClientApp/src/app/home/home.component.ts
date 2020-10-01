@@ -88,8 +88,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.api.deleteCar(car).subscribe((res) => {
 
-        let index = this.cars.findIndex(car => car.id = res.id); 
-        this.cars.splice(index, 1);
+        this.cars = this.cars.filter(obj => obj.id !== res.id);
         this.dataSource.data = this.cars;
 
       }, (error) => {

@@ -1,0 +1,14 @@
+<form>
+
+  <h4>Add new</h4>
+
+  <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Name" [(ngModel)]="name" name="name">
+    </mat-form-field>
+
+  <div class="button-group">
+      <button mat-raised-button color="primary" (click)="save()">Save</button>
+      <button mat-raised-button color="warn"  (click)="onNoClick()">Close</button>
+  </div>
+</form>

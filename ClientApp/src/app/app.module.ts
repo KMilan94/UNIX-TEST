@@ -12,6 +12,9 @@ import { ManufacturerListComponent } from './manufacturer-list/manufacturer-list
 import { AddDialogComponent } from './home/add-dialog/add-dialog.component';
 import { SearchComponent } from './search/search.component';
 import { Apiservice } from 'src/services/api.service';
+import { CarDetailComponent } from './car-detail/car-detail.component';
+import { ManufacturerDialogComponent } from './manufacturer-list/manufacturer-dialog/manufacturer-dialog.component';
+import { CarDetailDialogComponent } from './car-detail-list/car-detail-dialog/car-detail-dialog.component';
 
 import { MatIconModule, MatInputModule, MatSortModule, MatTableModule } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
@@ -19,7 +22,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CarDetailComponent } from './car-detail/car-detail.component';
+import {MatListModule} from '@angular/material/list';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,9 @@ import { CarDetailComponent } from './car-detail/car-detail.component';
     ManufacturerListComponent,
     SearchComponent,
     AddDialogComponent,
-    CarDetailComponent
+    CarDetailComponent,
+    ManufacturerDialogComponent,
+    CarDetailDialogComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -44,6 +50,8 @@ import { CarDetailComponent } from './car-detail/car-detail.component';
     MatSelectModule,
     MatIconModule,
     MatCardModule,
+    MatListModule,
+    MatProgressSpinnerModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'car-detail-list', component: CarDetailListComponent },
@@ -55,6 +63,6 @@ import { CarDetailComponent } from './car-detail/car-detail.component';
   ],
   providers: [ Apiservice ],
   bootstrap: [AppComponent],
-  entryComponents: [ AddDialogComponent]
+  entryComponents: [ AddDialogComponent, ManufacturerDialogComponent, CarDetailDialogComponent ]
 })
 export class AppModule { }

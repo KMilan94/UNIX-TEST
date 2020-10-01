@@ -1,9 +1,17 @@
 <mat-card>
-  <h2>No. {{ car.id }}</h2>
-  <h3>Model: {{ car?.carDetail?.model }}</h3>
-  <h4>Manufacturer: {{ car?.manufacturer?.name }}</h4>
-  <ul>
-    <li>Color: {{ car?.carDetail?.color }}</li>
-    <li>Fuel: {{ car?.carDetail?.fuel }}</li>
-  </ul>
+  <mat-card-header>
+    <i mat-card-avatar class="material-icons">drive_eta</i>
+    <mat-card-title>No. {{ car.id }}</mat-card-title>
+    <mat-card-subtitle>Car</mat-card-subtitle>
+  </mat-card-header>
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <img [hidden]="loading" (load)="onLoad()" class="height" src="../../assets/car_placeholder.png" />
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>Manufacturer: {{ car?.manufacturer?.name }}</mat-list-item>
+      <mat-list-item>Model: {{ car?.carDetail?.model }}</mat-list-item>
+      <mat-list-item>Color: {{ car?.carDetail?.color }}</mat-list-item>
+      <mat-list-item>Fuel: {{ car?.carDetail?.fuel }}</mat-list-item>
+     </mat-list>
+  </mat-card-content>
 </mat-card>
