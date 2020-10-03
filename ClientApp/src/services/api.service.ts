@@ -60,4 +60,18 @@ export class Apiservice {
   addCarDetail(carDetail: CarDetail): Observable<CarDetail> {
     return this.http.post<CarDetail>("/api/cardetail", carDetail);
   }
+
+  modifyCarDetail(carDetail: CarDetail): Observable<CarDetail> {
+
+    console.log("got: " + JSON.stringify(carDetail))
+
+    return this.http.put<CarDetail>(`/api/cardetail/${carDetail.id}`, carDetail);
+  }
+
+  modifyManufacturer(manufacturer: Manufacturer): Observable<Manufacturer> {
+
+    console.log("got: " + JSON.stringify(manufacturer))
+
+    return this.http.put<Manufacturer>(`/api/manufacturer/${manufacturer.id}`, manufacturer);
+  }
 }

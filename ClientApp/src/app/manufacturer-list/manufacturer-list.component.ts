@@ -40,10 +40,7 @@ export class ManufacturerListComponent {
     this.dataSource.sort = this.sort;
   }
 
-  saveRecord(name: string) {
-
-    var manufacturer = new Manufacturer();
-    manufacturer.name = name;
+  saveRecord(manufacturer: Manufacturer) {
 
     this.subscriptions.push(
 
@@ -75,13 +72,50 @@ export class ManufacturerListComponent {
   deleteRecord(element: Manufacturer) {
     this.subscriptions.push(
       this.api.deleteManufacturer(element).subscribe((res) => {
-        this.manufacturers = this.manufacturers.filter(obj => obj.id !== res.id);
-        this.dataSource.data = this.manufacturers;
+
+        if(res) {
+          this.manufacturers = this.manufacturers.filter(obj => obj.id !== res.id);
+          this.dataSource.data = this.manufacturers;
+        }
 
       }, (error) => {
         console.warn("Error: " + JSON.stringify(error));
       })
     )
   }
-}
 
+  openEditDialog(element: Manufacturer): void {
+
+    const dialogRef = this.dialog.open(ManufacturerDialogComponent, {
+      width: '250px',
+      data: { mode: "edit", element: <Manufacturer>JSON.parse(JSON.stringify(element)) }
+    });
+
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe(result => {
+
+        if(result) {
+          console.log("Result: " + JSON.stringify(result))
+          this.modifyRecord(result);
+        }
+      })
+    );
+  }
+
+  modifyRecord(manufacturer: Manufacturer) {
+
+    console.log("Result: " + JSON.stringify(manufacturer))
+
+    this.subscriptions.push(
+      this.api.modifyManufacturer(manufacturer).subscribe(() => {
+
+        var index = this.manufacturers.findIndex(x => x.id == manufacturer.id);
+        this.manufacturers[index] = manufacturer;
+        this.dataSource.data = this.manufacturers;
+
+      }, (error) => {
+        console.log("Error: " + JSON.stringify(error))
+      })
+    )
+  }
+}

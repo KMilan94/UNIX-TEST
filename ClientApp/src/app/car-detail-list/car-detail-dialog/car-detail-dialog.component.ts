@@ -15,6 +15,7 @@ export class CarDetailDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<CarDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data) {
         this.mode = data.mode;
+        this.carDetail = data.element || {} as CarDetail;
   }
 
   onNoClick(): void {

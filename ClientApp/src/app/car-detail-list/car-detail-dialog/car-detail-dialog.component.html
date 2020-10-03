@@ -1,24 +1,27 @@
 <form>
 
-    <h4>Add new</h4>
+  <h4 *ngIf="mode == 'add' else edit">Add new</h4>
+  <ng-template #edit>
+    <h4>Modify</h4>
+  </ng-template>
 
-    <mat-form-field appearance="fill">
-        <mat-label>Model</mat-label>
-        <input matInput placeholder="Model" [(ngModel)]="carDetail.model" name="model">
-      </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Model</mat-label>
+    <input matInput placeholder="Model" [(ngModel)]="carDetail.model" name="model">
+  </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Color</mat-label>
-        <input matInput placeholder="Color" [(ngModel)]="carDetail.color" name="color">
-      </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Color</mat-label>
+    <input matInput placeholder="Color" [(ngModel)]="carDetail.color" name="color">
+  </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Fuel</mat-label>
-        <input matInput placeholder="Fuel" [(ngModel)]="carDetail.fuel" name="fuel">
-      </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Fuel</mat-label>
+    <input matInput placeholder="Fuel" [(ngModel)]="carDetail.fuel" name="fuel">
+  </mat-form-field>
 
-    <div class="button-group">
-        <button mat-raised-button color="primary" (click)="save()">Save</button>
-        <button mat-raised-button color="warn"  (click)="onNoClick()">Close</button>
-    </div>
+  <div class="button-group">
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+    <button mat-raised-button color="warn" (click)="onNoClick()">Close</button>
+  </div>
 </form>

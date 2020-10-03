@@ -8,10 +8,22 @@
   <img [hidden]="loading" (load)="onLoad()" class="height" src="../../assets/car_placeholder.png" />
   <mat-card-content>
     <mat-list>
-      <mat-list-item>Manufacturer: {{ car?.manufacturer?.name }}</mat-list-item>
-      <mat-list-item>Model: {{ car?.carDetail?.model }}</mat-list-item>
-      <mat-list-item>Color: {{ car?.carDetail?.color }}</mat-list-item>
-      <mat-list-item>Fuel: {{ car?.carDetail?.fuel }}</mat-list-item>
+      <mat-list-item>
+        <span>Manufacturer</span>
+        <span>{{ car?.manufacturer?.name }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span>Model</span>
+        <span>{{ car?.carDetail?.model }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span>Color</span>
+        <span>{{ car?.carDetail?.color }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span>Fuel</span>
+        <span>{{ car?.carDetail?.fuel }}</span>
+      </mat-list-item>
      </mat-list>
   </mat-card-content>
 </mat-card>

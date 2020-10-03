@@ -83,4 +83,39 @@ export class CarDetailListComponent implements OnInit, OnDestroy {
       })
     )
   }
+
+  openEditDialog(element: CarDetail): void {
+
+    const dialogRef = this.dialog.open(CarDetailDialogComponent, {
+      width: '250px',
+      data: { mode: "edit", element: <CarDetail>JSON.parse(JSON.stringify(element)) }
+    });
+
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe(result => {
+
+        if(result) {
+          console.log("Result: " + JSON.stringify(result))
+          this.modifyRecord(result);
+        }
+      })
+    );
+  }
+
+  modifyRecord(carDetail: CarDetail) {
+
+    console.log("Result: " + JSON.stringify(carDetail))
+
+    this.subscriptions.push(
+      this.api.modifyCarDetail(carDetail).subscribe(() => {
+
+        var index = this.carDetails.findIndex(x => x.id == carDetail.id);
+        this.carDetails[index] = carDetail;
+        this.dataSource.data = this.carDetails;
+
+      }, (error) => {
+        console.log("Error: " + JSON.stringify(error))
+      })
+    )
+  }
 }

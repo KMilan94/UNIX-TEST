@@ -10,3 +10,12 @@ img {
     margin-left: 50%;
     margin-right: 50%;
 }
+
+:host ::ng-deep .mat-list-base .mat-list-item .mat-list-item-content {
+    justify-content: space-between;
+}
+
+span:first-of-type {
+    font-weight: bold;
+    font-size: 1.2rem;
+}

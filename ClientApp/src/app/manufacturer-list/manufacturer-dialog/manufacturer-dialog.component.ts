@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Manufacturer } from 'src/domain/manufacturer';
 
 @Component({
   selector: 'app-manufacturer-dialog',
@@ -9,11 +10,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class ManufacturerDialogComponent {
 
   mode: string = "add";
-  name: string = "";
+  manufacturer = {} as Manufacturer;
 
   constructor(
     public dialogRef: MatDialogRef<ManufacturerDialogComponent>, @Inject(MAT_DIALOG_DATA) public data) {
+
+      console.log("Data: " + JSON.stringify(data))
         this.mode = data.mode;
+        this.manufacturer = data.element || {} as Manufacturer;
   }
 
   onNoClick(): void {
@@ -21,7 +25,7 @@ export class ManufacturerDialogComponent {
   }
 
   save(): void {
-    this.dialogRef.close(this.name);
+    this.dialogRef.close(this.manufacturer);
   }
 }
 
