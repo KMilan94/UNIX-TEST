@@ -144,9 +144,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.dataSource.sortingDataAccessor = _.get; 
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = (data: Car, filter: string) => {
-
-
-      return data.carDetail.model.startsWith(filter);
+      return data.carDetail.model.toLowerCase().startsWith(filter.toLowerCase());
      };
   }
 
