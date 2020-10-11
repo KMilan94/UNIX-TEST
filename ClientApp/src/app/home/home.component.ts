@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, Inject } from '@angular/core';
-import { combineLatest, Observable, Subscription } from 'rxjs';
+import { combineLatest, forkJoin, merge, Observable, Subscription, zip } from 'rxjs';
 import { CarDetail } from 'src/domain/car-detail';
 import { Manufacturer } from 'src/domain/manufacturer';
 import { Apiservice } from 'src/services/api.service';
@@ -35,28 +35,24 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    // ToDo: refactor with map / zip
-
     this.subscriptions = [
-      combineLatest([this.api.getManufacturers(), this.api.getCarDetails()]).pipe(
-        switchMap((tmp) => { 
-          this.manufacturers = tmp[0];
-          this.carDetails = tmp[1];
-          return this.api.getCars();
-        })
-      )
-      .subscribe((cars => {
-        for(let i = 0; i != cars.length; ++i) {
+
+      forkJoin([this.api.getManufacturers(), this.api.getCarDetails(), this.api.getCars()]).subscribe((tmp) => {
+
+        this.manufacturers = tmp[0];
+        this.carDetails = tmp[1];
+
+        for(let i = 0; i != tmp[2].length; ++i) {
           let car = new Car();
-          car.id = cars[i].id;
-          car.carDetail = this.carDetails.find(c => c.id == cars[i].carDetailID) || {} as CarDetail;
-          car.manufacturer = this.manufacturers.find(m => m.id == cars[i].manufacturerID) || {} as Manufacturer;
+          car.id = tmp[2][i].id;
+          car.carDetail = this.carDetails.find(c => c.id == tmp[2][i].carDetailID) || {} as CarDetail;
+          car.manufacturer = this.manufacturers.find(m => m.id == tmp[2][i].manufacturerID) || {} as Manufacturer;
           this.cars.push(car);
         }
 
         this.initSorting();
         console.log("Cars: " + JSON.stringify(this.cars))
-      }))
+      })
     ]
   }
 

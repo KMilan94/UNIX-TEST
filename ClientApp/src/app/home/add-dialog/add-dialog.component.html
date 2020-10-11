@@ -1,13 +1,12 @@
-<form>
+<form *ngIf="mode == 'add' || mode == 'edit'; else delete">
 
   <div [ngSwitch]="mode">
     <h4 *ngSwitchCase="'add'">Add new</h4>
     <h4 *ngSwitchCase="'edit'">Update</h4>
-    <h4 *ngSwitchCase="'delete'">Delete</h4>
     <h4 *ngSwitchDefault>Unknown</h4>
   </div>
 
-  <mat-form-field appearance="fill" *ngIf="mode == 'edit' || mode == 'add'">
+  <mat-form-field appearance="fill">
     <mat-label>Manufacturer</mat-label>
     <mat-select [(ngModel)]="car.manufacturerID" name="manufacturerID">
       <mat-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.id">
@@ -16,7 +15,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" *ngIf="mode == 'edit' || mode == 'add'">
+  <mat-form-field appearance="fill">
     <mat-label>Model</mat-label>
     <mat-select [(ngModel)]="car.carDetailID" name="carDetailID">
       <mat-option *ngFor="let carDetail of carDetails" [value]="carDetail.id">
@@ -25,18 +24,24 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="button-group" *ngIf="mode == 'edit' || mode == 'add'">
+  <div class="button-group">
     <button mat-raised-button color="primary" (click)="save()">Save</button>
     <button mat-raised-button color="warn" (click)="onNoClick()">Close</button>
   </div>
-
-
-  <p *ngIf="mode == 'delete'">
-    Sure to delete?
-  </p>
-
-  <div class="button-group" *ngIf="mode == 'delete'">
-    <button mat-raised-button color="primary" (click)="delete(true)">Ok</button>
-    <button mat-raised-button color="accent" (click)="delete(false)">Cancel</button>
-  </div>
 </form>
+
+<ng-template #delete>
+  <form>
+
+    <h4>Delete</h4>
+    
+    <p *ngIf="mode == 'delete'">
+      Sure to delete?
+    </p>
+
+    <div class="button-group">
+      <button mat-raised-button color="primary" (click)="delete(true)">Ok</button>
+      <button mat-raised-button color="accent" (click)="onNoClick()">Cancel</button>
+    </div>
+  </form>
+</ng-template>

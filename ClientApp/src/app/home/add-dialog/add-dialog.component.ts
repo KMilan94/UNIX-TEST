@@ -6,7 +6,7 @@ import { CarDetail } from "src/domain/car-detail";
 import { CarDTO } from "src/domain/carDTO";
 import { Manufacturer } from "src/domain/manufacturer";
 
-export type Mode = "add" | "edit";
+export type Mode = "add" | "edit" | "delete";
 
 @Component({ 
     selector: 'add-dialog',

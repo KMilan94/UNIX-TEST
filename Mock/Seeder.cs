@@ -19,24 +19,20 @@ namespace Unix.Mock
         }
 
         private void Insert(DbManufacturer manufacturer, DbCarDetail carDetail) {
-            this.unixDbContext.Manufacturer.Add(manufacturer);
-            this.unixDbContext.CarDetail.Add(carDetail);
-            this.unixDbContext.SaveChanges();
-            this.unixDbContext.Car.Add(new DbCar(manufacturer.ID, carDetail.ID));
-            this.unixDbContext.SaveChanges();
+            unixDbContext.Manufacturer.Add(manufacturer);
+            unixDbContext.CarDetail.Add(carDetail);
+            unixDbContext.SaveChanges();
+            unixDbContext.Car.Add(new DbCar(manufacturer.ID, carDetail.ID));
+            unixDbContext.SaveChanges();
         }
 
         public void Seed()
         {
-            this.unixDbContext.Database.EnsureCreated();
-
-            if (this.unixDbContext.Car.ToList().Count() != 0) return;
-
-            this.Insert(new DbManufacturer("Skoda"), new DbCarDetail("Octavia", "Green", "Gasoline"));
-            this.Insert(new DbManufacturer("Lada"), new DbCarDetail("Granta", "White", "Gasoline"));
-            this.Insert(new DbManufacturer("Aston Martin"), new DbCarDetail("Rapide", "Brown", "Gasoline"));
+            if (unixDbContext.Database.EnsureCreated() && unixDbContext.Car.ToList().Count() != 0) {
+                Insert(new DbManufacturer("Skoda"), new DbCarDetail("Octavia", "Green", "Gasoline"));
+                Insert(new DbManufacturer("Lada"), new DbCarDetail("Granta", "White", "Gasoline"));
+                Insert(new DbManufacturer("Aston Martin"), new DbCarDetail("Rapide", "Brown", "Gasoline"));
+            }
         }
-
-
     }
 }
