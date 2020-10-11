@@ -26,13 +26,11 @@
         <mat-icon>create</mat-icon>
       </button>
 
-      <button mat-icon-button color="warn" aria-label="Example icon button with a home icon"
-        (click)="deleteRecord(element)">
+      <button mat-icon-button color="warn" (click)="openDeleteDialog(element)">
         <mat-icon>delete</mat-icon>
       </button>
 
-      <button mat-icon-button aria-label="Example icon button with a home icon"
-      (click)="detail(element)">
+      <button mat-icon-button (click)="detail(element)">
       <mat-icon>more_vert</mat-icon>
     </button>
     </td>

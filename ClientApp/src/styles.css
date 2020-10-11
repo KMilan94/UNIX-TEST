@@ -18,8 +18,7 @@ code {
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
-      background-color: #94979a;
-      background-image: linear-gradient(0deg, #3f51b5 0%, #ece1ec 100%);
-      background-size: 100% auto;
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

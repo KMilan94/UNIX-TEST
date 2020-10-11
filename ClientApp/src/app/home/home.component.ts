@@ -84,19 +84,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     )
   }
 
-  deleteRecord(car: CarDTO) {
-    this.subscriptions.push(
-      this.api.deleteCar(car).subscribe((res) => {
-
-        this.cars = this.cars.filter(obj => obj.id !== res.id);
-        this.dataSource.data = this.cars;
-
-      }, (error) => {
-        console.log("Error: " + JSON.stringify(error))
-      })
-    )
-  }
-
   modifyRecord(car: CarDTO) {
 
     console.log("Result: " + JSON.stringify(car))
@@ -176,5 +163,33 @@ export class HomeComponent implements OnInit, OnDestroy {
         if(result && !!result.manufacturerID && !!result.carDetailID) this.modifyRecord(result);
       })
     );
+  }
+
+  openDeleteDialog(car: CarDTO) {
+
+    const dialogRef = this.dialog.open(AddDialogComponent, {
+      width: '250px',
+      data: { mode: "delete" }
+    });
+
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe(result => {
+        if(result) {
+          this.deleteRecord(car);
+        }
+      })
+    );
+  }
+
+  deleteRecord(car: CarDTO) {
+
+    this.api.deleteCar(car).subscribe((res) => {
+
+      this.cars = this.cars.filter(obj => obj.id !== res.id);
+      this.dataSource.data = this.cars;
+
+    }, (error) => {
+      console.log("Error: " + JSON.stringify(error))
+    })
   }
 }

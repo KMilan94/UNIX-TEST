@@ -50,4 +50,8 @@ export class AddDialogComponent implements OnInit {
       this.dialogRef.close(this.car);
   }
 
+  delete(sure: boolean): void {
+    this.dialogRef.close(sure);
+  }
+
 }
